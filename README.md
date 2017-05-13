@@ -9,12 +9,14 @@ This module implements a simple ftp server in nodemcu on top of the SPIFFS files
 
 The FTP server can be started and stopped in the nodemcu LUA environment with ftp.start() and ftp.stop().
 
-It's main limitations are 
+When the server is started you can store, retrieve, rename and delete files on the SPIFFS filesystem with any standard ftp client on LINUX, OSX or Windows.
+
+The current implementation main limitations are 
 - Only passive mode supported
 - Only 1 client connection supported
 - Only a subset of RFC 959 FTP server commands implemented (e.g. due to SPIFFS no directory related commands).
 
-This is a list of implemented FTP server commands:
+List of implemented FTP server commands:
 -  USER - Username for Authentication
 -  PASS - Password for Authentication
 -  RNTO - Rename To (previous RNFR required)
@@ -40,5 +42,7 @@ The following commands are not implemented because SPIFFS does not support direc
 For any other command not listed here the server return code will be also 501 ("Syntax Error").
 
 To make this module compiled into your nodemcu firmware build you need to add
+
   #define LUA_USE_MODULES_FTP
+
 in app/include/user_modules.h.
