@@ -1,9 +1,8 @@
 //
 //  ftpcmd.c
-//  test_project
+//  nodemcu-firmware 1.5.4.1
 //
 //  Created by Matthias Walczyk on 10.04.17.
-//  Copyright © 2017 Matthias Walczyk. All rights reserved.
 //
 
 #include "module.h"
