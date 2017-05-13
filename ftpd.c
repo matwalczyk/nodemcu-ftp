@@ -19,7 +19,7 @@
 
 #define FTP_SERVER_VERSION "Version LUAFTP-"__DATE__
 #define FTP_CTRL_PORT       21          // Command port on wich server is listening
-#define FTP_DATA_PORT_PASV  50009       // Data port in passive mode
+#define FTP_DATA_PORT_PASV  49999       // Data port for passive mode
 #define FTP_TIME_OUT        5           // Disconnect client after 5 minutes of inactivity
 #define FTP_USER  "user"
 #define FTP_PASS  "ichbines"
@@ -139,7 +139,7 @@ static bool ICACHE_FLASH_ATTR processCommand() {
   ////////////////////////////////////////////
   
   //
-  //  USER
+  //  USER - Username for Authentication
   //
   if (cmdStatus == USERREQUIRED) {
     if (strcmp(command, "USER"))
@@ -154,7 +154,7 @@ static bool ICACHE_FLASH_ATTR processCommand() {
     return false;
   }
   //
-  //  PASS
+  //  PASS - Password for Authentication
   //
   else if (cmdStatus == PASSREQUIRED) {
     if (strcmp(command, "PASS"))
@@ -169,7 +169,7 @@ static bool ICACHE_FLASH_ATTR processCommand() {
     return false;
   }
   //
-  //  RNTO
+  //  RNTO - Rename To (previous RNFR required)
   //
   else if (cmdStatus == RNTOREQUIRED) {
     if (strcmp(command, "RNTO"))
@@ -195,7 +195,7 @@ static bool ICACHE_FLASH_ATTR processCommand() {
     return false;
   }
   //
-  //  QUIT
+  //  QUIT - End of Client Session
   //
   else if (!strcmp(command, "QUIT")) {
     cmdConnClose();
@@ -344,7 +344,7 @@ static bool ICACHE_FLASH_ATTR processCommand() {
     }
     return true;
   }
-  //  RNFR - Rename File From <parameter>
+  //  RNFR - Rename File From
   //
   else if (!strcmp(command, "RNFR")) {
     if (strlen(parameter) == 0)
@@ -402,11 +402,11 @@ static bool ICACHE_FLASH_ATTR processCommand() {
     sendCmdConn("257 \"%s\" is your current location (dirs are not supported with SPIFFS)", ".");
   }
   
-  ////////////////////////////////////////////
-  //                                        //
-  //  PROCESS NON IMPLEMENTED DIR COMMANDS  //
-  //                                        //
-  ////////////////////////////////////////////
+  ///////////////////////////////////////////////
+  //                                           //
+  //  PROCESS NON IMPLEMENTED OTHER COMMANDS   //
+  //                                           //
+  ///////////////////////////////////////////////
   
   //
   //  MODE - Transfer Mode
@@ -454,15 +454,10 @@ static bool ICACHE_FLASH_ATTR processCommand() {
   //  SITE - File Structure
   //
   else if (!strcmp(command, "SITE")) {
-    printDbg("Heap before Data Connection Create: %d\n", system_get_free_heap_size());
-    dataConnCreate();
-    printDbg("Heap after  Data Connection Create: %d\n", system_get_free_heap_size());
-    dataConnClose();
-    printDbg("Heap after  Data Connection Close : %d\n", system_get_free_heap_size());
     sendCmdConn("502 SITE Command not implemented.");
   }
   //
-  //  Unrecognized commands ...
+  //  Other Unrecognized commands ...
   //
   else
     sendCmdConn("500 Unknown Command %s. Not Implemented.", command);
