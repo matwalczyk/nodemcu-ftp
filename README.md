@@ -1,6 +1,6 @@
 # nodemcu-ftp
 
-Nodemcu firmware module in C providing a ftp server on the ESP8266
+Nodemcu firmware use module in C providing a ftp server on the ESP8266
 
 Requires a working build chain or docker image (see https://nodemcu.readthedocs.io/en/master/en/build/).
 This module was build with a dedicated tool chain in an OSX build environment and developed in Xcode.
@@ -41,7 +41,9 @@ The following commands are not implemented because SPIFFS does not support direc
 
 For any other command not listed here the server return code will be also 501 ("Syntax Error").
 
-To make this module compiled into your nodemcu firmware build you need to add
+The file needs to be placed into the app/modules directory of the nodemcu firmware tree.
+
+To get this module compiled into your nodemcu firmware build you need to add
 
   #define LUA_USE_MODULES_FTP
 
